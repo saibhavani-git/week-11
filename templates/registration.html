@@ -1,36 +1,49 @@
 <!DOCTYPE html>
 <html>
-<head>  
+<head>
     <title>Login Form</title>
 </head>
-<body>
-<h2>Login</h2>
-<form action="/login" onsubmit="return validateForm()" method="post">
-    <label for="username">Username:</label><br>
-    <input type="text" id="username" name="username" required><br><br>
-    <label for="password">Password:</label><br>
-    <input type="password" id="password" name="password" required><br><br>
-    <input type="submit" value="Login">
-</form>
-<script>
-    function validateForm() {
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
 
-        if(username==""){
-            alert("Username cannot be empty");
-            return false;
-        } else if(password==""){
-            alert("Password cannot be empty");
-            return false;
-        }
-        else if(password.length < 6){
-            alert("Password must be at least 6 characters long");
-            return false;
-        }
-        return true; 
+<body>
+
+<h2>Login</h2>
+
+<form action="/submit" onsubmit="return validateForm()" method="post">
+
+    <label for="username">Username:</label><br>
+    <input type="text" id="username" name="username"><br><br>
+
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password"><br><br>
+
+    <input type="submit" value="Login">
+
+</form>
+
+<script>
+function validateForm() {
+
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    if (username == "") {
+        alert("Username cannot be empty.");
+        return false;
     }
 
+    if (password == "") {
+        alert("Password cannot be empty.");
+        return false;
+    }
+
+    if (password.length < 6) {
+        alert("Password must be at least 6 characters long.");
+        return false;
+    }
+
+    return true;
+}
 </script>
-</body> 
+
+</body>
 </html>
