@@ -3,36 +3,36 @@ pipeline {
 
     stages {
 
-        stage('Run Selenium Tests with pytest') {
+       stage('Run Selenium Tests with pytest') {
+    steps {
 
-            steps {
+        echo "Installing dependencies..."
+        bat 'python -m pip install -r requirements.txt'
 
-                echo "Running Selenium Tests using pytest"
+        echo "Checking project files..."
+        bat 'dir'
+        bat 'dir templates'
+        bat 'dir test'
 
-                bat 'python --version'
+        echo "Starting Flask application..."
+        bat 'start /B "" python app.py > flask.log 2>&1'
 
-                bat 'python -m pip --version'
+        echo "Waiting for Flask..."
+        bat 'ping 127.0.0.1 -n 6 > nul'
 
-                bat 'python -m pip install -r requirements.txt'
+        echo "===== FLASK LOG ====="
+        bat 'type flask.log'
 
+        echo "===== CHECKING PORT 5000 ====="
+        bat 'netstat -ano | findstr :5000'
 
-                echo "Starting Flask application..."
+        echo "===== CHECKING FLASK ====="
+        bat 'curl.exe -i http://127.0.0.1:5000/'
 
-                bat 'start /B python app.py'
-
-                bat 'ping 127.0.0.1 -n 5 > nul'
-
-
-                echo "Checking Flask application..."
-
-                bat 'curl.exe -s http://127.0.0.1:5000/'
-
-
-                echo "Running Selenium tests..."
-
-                bat 'python -m pytest -v'
-            }
-        }
+        echo "===== RUNNING SELENIUM TESTS ====="
+        bat 'python -m pytest -v'
+    }
+}
 
 
         stage('Build Docker Image') {
