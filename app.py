@@ -5,13 +5,13 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('form.html')
+    return render_template('registration.html')
 
 
-@app.route('/submit', methods=['GET', 'POST'])
+@app.route('/submit', methods=['POST'])
 def submit():
     username = request.form['username']
-    return render_template('greeting.html', name=username)
+    return render_template('success.html', name=username)
 
 
 if __name__ == '__main__':
