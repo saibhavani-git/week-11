@@ -19,6 +19,6 @@ spec:
     spec:
       containers:
         - name: registration-form-v2
-          image: registration-form:latest
+          image: saibhavani12/sample2026:registration-form
           ports:
             - containerPort: 5000
