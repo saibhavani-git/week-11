@@ -46,21 +46,21 @@ pipeline {
         }
 
 
-        stage('Docker Login') {
+      stage('Docker Login') {
+    steps {
+        echo "Logging into Docker Hub"
 
-            steps {
-
-                echo "Logging into Docker Hub"
-
-                /*
-                 Use Jenkins Credentials instead of putting
-                 your Docker password/token directly here.
-                */
-
-                bat 'docker login -u saibhavani12 -p YOUR_DOCKER_TOKEN'
-            }
+        withCredentials([
+            usernamePassword(
+                credentialsId: 'dockerhub-creds',
+                usernameVariable: 'DOCKER_USERNAME',
+                passwordVariable: 'DOCKER_TOKEN'
+            )
+        ]) {
+            bat 'docker login -u "%DOCKER_USERNAME%" -p "%DOCKER_TOKEN%"'
         }
-
+    }
+}
 
         stage('Push Docker Image to Docker Hub') {
 
